@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {List, ListItem} from 'material-ui/List'
+import ActionDone from 'material-ui/svg-icons/action/done'
+import {blue200, lime500} from 'material-ui/styles/colors'
 
 const Todo = ({ onClick, completed, text }) => (
-  <li
+  <ListItem
+    primaryText={text}
     onClick={onClick}
-    style={{
-      textDecoration: completed ? 'line-through' : 'none'
-    }}
-  >
-    {text}
-  </li>
+    leftIcon={<ActionDone color={completed ? lime500 : blue200}/>}
+  />
 )
 
 Todo.PropTypes = {

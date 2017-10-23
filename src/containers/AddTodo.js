@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions'
+import IconButton from 'material-ui/IconButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import TextField from 'material-ui/TextField'
 
 let AddTodo = ({ dispatch }) => {
   let input
@@ -10,21 +13,21 @@ let AddTodo = ({ dispatch }) => {
       <form
         onSubmit={e => {
           e.preventDefault()
-          if (!input.value.trim()) {
+          if (!input.getValue().trim()) {
             return
           }
-          dispatch(addTodo(input.value))
-          input.value = ''
+          dispatch(addTodo(input.getValue()))
+          input.getInputNode().value = ''
         }}
       >
-        <input
+        <TextField
           ref={node => {
             input = node
           }}
         />
-        <button type="submit">
-          Add Todo
-        </button>
+        <IconButton type="submit">
+          <ContentAdd/>
+        </IconButton>
       </form>
     </div>
   )

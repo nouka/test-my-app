@@ -1,21 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const Link = ({ active, children, onClick }) => {
   if (active) {
-    return <span>{children}</span>
+    return (
+      <RaisedButton
+        label={children}
+        disabled={true}
+      />
+    )
   }
 
   return (
-    <a
-      href="#"
+    <RaisedButton
+      label={children}
       onClick={e => {
         e.preventDefault()
         onClick()
       }}
-    >
-      {children}
-    </a>
+    />
   )
 }
 
