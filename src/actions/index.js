@@ -1,22 +1,5 @@
-let nextTodoId = 0
-export const addTodo = text => {
-  return {
-    type: 'ADD_TODO',
-    id: nextTodoId++,
-    text
-  }
-}
+import fetch from 'isomorphic-fetch'
 
-export const setVisibilityFilter = filter => {
-  return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
-  }
-}
-
-export const toggleTodo = id => {
-  return {
-    type: 'TOGGLE_TODO',
-    id
-  }
-}
+export const REQUEST_POSTS = 'REQUEST_POSTS'
+export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'

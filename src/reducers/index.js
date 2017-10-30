@@ -1,10 +1,35 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
-import visibilityFilter from './visibilityFilter'
+import { REQUEST, RECEIVE } from '../actions'
 
-const todoApp = combineReducers({
+function items(
+  state = {
+    isFetching: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case RECEIVE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.items
+      });
+    default:
+      return state
+  }
+}
+
+function fetchItems(state = {}, action) {
+
+}
+
+const rootReducer = combineReducers({
   todos,
   visibilityFilter
 })
 
-export default todoApp
+export default rootReducer
