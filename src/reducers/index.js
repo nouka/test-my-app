@@ -1,35 +1,66 @@
 import { combineReducers } from 'redux'
-import { REQUEST, RECEIVE } from '../actions'
+import {
+  SELECT_SUBREDDIT,
+  INVALIDATE_SUBREDDIT,
+  REQUEST_POSTS,
+  RECEIVE_POSTS
+} from '../actions'
 
-function items(
-  state = {
-    isFetching: false,
-    items: []
-  },
-  action
-) {
+function selectedSubreddit(state = 'reactjs', action) {
   switch (action.type) {
-    case REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true
-      });
-    case RECEIVE:
-      return Object.assign({}, state, {
-        isFetching: false,
-        items: action.items
-      });
+    case SELECT_SUBREDDIT:
+      return action.subreddit
     default:
       return state
   }
 }
 
-function fetchItems(state = {}, action) {
+function posts(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      })
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+    case RECEIVE_POSTS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.posts,
+        lastUpdated: action.receiveAt
+      })
+    default:
+      return state
+  }
+}
 
+function postsBySubreddit(state = {}, action) {
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        [action.subreddit]: posts(state[action.subreddit], action)
+      })
+    default:
+      return state
+  }
 }
 
 const rootReducer = combineReducers({
-  todos,
-  visibilityFilter
+  postsBySubreddit,
+  selectedSubreddit
 })
 
 export default rootReducer
